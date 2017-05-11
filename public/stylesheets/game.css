@@ -1,0 +1,53 @@
+* {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */ }
+
+body {
+  padding: 0px;
+  margin: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #045a64;
+  overflow: hidden; }
+  body .game-body {
+    position: absolute;
+    background-color: blue;
+    display: block; }
+    body .game-body .board, body .game-body .stats {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top; }
+    body .game-body .board {
+      width: 70%;
+      background-color: black;
+      border: 5px solid black; }
+      body .game-body .board .field {
+        background-color: #a0a078;
+        border: 1px solid black;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0px;
+        padding: 0px;
+        cursor: pointer;
+        transition: background 0.2s;
+        background-size: 110%;
+        background-repeat: no-repeat;
+        background-position: center; }
+        body .game-body .board .field:hover {
+          background-color: rgba(160, 160, 120, 0.7); }
+        body .game-body .board .field.O, body .game-body .board .field.X {
+          background-size: 80%; }
+          body .game-body .board .field.O:hover, body .game-body .board .field.X:hover {
+            background-color: #a0a078 !important; }
+        body .game-body .board .field.O {
+          background-image: url("../images/O.png"); }
+        body .game-body .board .field.X {
+          background-image: url("../images/X.png"); }
+    body .game-body .stats {
+      background-color: #f2f2f2;
+      width: 30%; }
+
+/*# sourceMappingURL=game.css.map */

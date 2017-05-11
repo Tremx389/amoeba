@@ -1,0 +1,62 @@
+*
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+
+body
+  padding: 0px
+  margin: 0px
+  
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+
+  background-color: rgb(4, 90, 100)
+  overflow: hidden
+
+  .game-body
+    position: absolute
+    background-color: blue
+    display: block
+    // box-shadow: 0 0 50px rgba(0,0,0,1)
+
+    .board, .stats
+        display: inline-block
+        height: 100%
+        vertical-align: top
+
+    .board
+        width: 70%
+        background-color: black
+        border: 5px solid black
+
+        .field
+            $c: rgb(160,160,120)
+            background-color: $c
+            border: 1px solid black
+            display: inline-block
+            vertical-align: top
+            margin: 0px
+            padding: 0px
+            cursor: pointer
+
+            transition: background 0.2s
+            background-size: 110%
+            background-repeat: no-repeat
+            background-position: center
+
+            &:hover
+                background-color: rgba($c,0.7)
+
+            &.O, &.X
+                background-size: 80%
+                // background-size: 0%
+                &:hover
+                    background-color: $c !important
+
+            &.O
+                background-image: url("../images/O.png")
+
+            &.X
+                background-image: url("../images/X.png")
+    .stats
+        background-color: #f2f2f2
+        width: 30%
