@@ -124,6 +124,15 @@ let checkWin = function(x, y) {
   return false
 }
 
+let clear = function(){
+	const n = board[0].length;
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			board[i][j] = 0;
+		}
+	}
+}
+
 let oNext = false;
 let markField = function() {
   let rx = /[-]{0,1}[\d.]*[\d]+/g;
@@ -142,6 +151,7 @@ let markField = function() {
 
     if (checkWin(x, y)) {
       alert("Jatekos nyert!");
+	  clear;
     }
 
     oNext = !oNext;
