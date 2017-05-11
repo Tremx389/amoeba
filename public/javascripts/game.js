@@ -1,16 +1,33 @@
 const BOARD_SIZE = 13;
+const p2w = 5;      // how many symbols should be in a row
+const r = 0.7;      // game window heigt/width ratio
 
 let corMin = (n) => {return n < 0 ? 0 : n;}
 let corMax = (n) => {return n > BOARD_SIZE ? BOARD_SIZE : n;}
 
-let board = [];
+let board, playerO, playerX;;
+let oNext = false;
+let ended = false;
 
+class Player {
+  constructor(name, dom_obj) {
+    this.points = 0;
+    this.name = name;
+    this.dom_obj = dom_obj;
 
+    $(".name", this.dom_obj).html(this.name);
+  }
 
+  win() {
+    console.log('asdasdasdas')
+    this.points++;
 
+    $(".points", this.dom_obj).html(this.points);
+
+  }
+}
 
 let autoSizer = function() {
-  const r = 0.7;
   const w = window.innerWidth;
   const h = window.innerHeight;
 
@@ -38,7 +55,6 @@ let autoSizer = function() {
 }
 
 let checkWin = function(x, y) {
-  const p2w = 5;      // how many symbols should be in a row
 
   // vertical
   let last;
@@ -110,7 +126,6 @@ let checkWin = function(x, y) {
   counter = 1;
   j = corMax(y + p2w - 1);
   for (let i = corMin(x - p2w + 1); i < corMax(x + p2w); i++) {
-    console.log(i + " - " + j);
     if ((last === "X" || last === "O") && last === board[i][j]) {
       if (counter === p2w - 1) {
         let p = j;
@@ -134,66 +149,87 @@ let checkWin = function(x, y) {
   return false
 }
 
-let clear = function(){
-	const n = board[0].length;
-	for (let i = 0; i < n; i++) {
-		for (let j = 0; j < n; j++) {
-			board[i][j] = 0;
-		}
-	}
+let clearBoard = function() {
+  board = [];
+
+  for (let i = 0; i < BOARD_SIZE; ++i) {
+    board.push([]);
+    for (let j = 0; j < BOARD_SIZE; ++j) {
+      board[i].push(null);
+    }
+  }
+
+  $(".game-body > .board > .field").removeClass("O X W");
 }
 
-let oNext = false;
+let end = function() {
+  ended = true;
+
+  $("button.restart_btn").prop('disabled', false);
+
+  let c = 1;
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let j = 0; j < BOARD_SIZE; j++) {
+      if (board[i][j] === "W") {
+        setTimeout(function() {
+          $(".game-body > .board > .field#" + i + "_" + j).addClass("W");
+        }, c * 50);
+        c++;
+      }
+    }
+  }
+
+  let winner = (oNext ? playerO : playerX);
+  setTimeout(function() {
+    alert(winner.name + " has won!");
+  }, p2w * 100);
+
+  console.log(winner);
+  winner.win();
+}
+
+let restart = function() {
+  clearBoard();
+  ended = false;
+  $("button.restart_btn").prop('disabled', true);
+}
+
 let markField = function() {
-  let rx = /[-]{0,1}[\d.]*[\d]+/g;
-  let coords = this.id.match(rx);
-  let x = Number(coords[0]);
-  let y = Number(coords[1]);
+  if (!ended) {
+    let rx = /[-]{0,1}[\d.]*[\d]+/g;
+    let coords = this.id.match(rx);
+    let x = Number(coords[0]);
+    let y = Number(coords[1]);
 
-  if (!$(this).hasClass("O") && !$(this).hasClass("X")) {
-    if (oNext) {
-      $(this).addClass("O");
-      board[x][y] = "O";
+    if (!$(this).hasClass("O") && !$(this).hasClass("X")) {
+      if (oNext) {
+        $(this).addClass("O");
+        board[x][y] = "O";
+      } else {
+        $(this).addClass("X");
+        board[x][y] = "X";
+      }
+
+      if (checkWin(x, y)) {
+        end();
+      }
+
+      oNext = !oNext;
     } else {
-      $(this).addClass("X");
-      board[x][y] = "X";
+      console.log("Already marked.");
     }
-
-    if (checkWin(x, y)) {
-      let c = 1;
-        for (let i = 0; i < BOARD_SIZE; i++) {
-          for (let j = 0; j < BOARD_SIZE; j++) {
-            if (board[i][j] === "W") {
-              setTimeout(function() {
-                $(".game-body > .board > .field#" + i + "_" + j).addClass("W");
-              }, c * 50);
-              c++;
-            }
-          }
-        }
-      // alert("Jatekos nyert!");
-
-    }
-
-    oNext = !oNext;
-  } else {
-    console.log("Already marked.");
   }
 }
 
 //Init
 
-$(document).ready(autoSizer);
-$(window).on("resize", autoSizer);
-
-for (let i = 0; i < BOARD_SIZE; ++i) {
-  board.push([]);
-  for (let j = 0; j < BOARD_SIZE; ++j) {
-    board[i].push(null);
-  }
-}
-
 $(document).ready(function() {
+  autoSizer();
+  clearBoard();
+
+  playerO = new Player("John", $(".stats .playerO"));
+  playerX = new Player("Bob", $(".stats .playerX"));
+
   const s = 100 / 13;
   
   let gb = $(".game-body > .board");
@@ -211,3 +247,4 @@ $(document).ready(function() {
   }
 });
 
+$(window).on("resize", autoSizer);

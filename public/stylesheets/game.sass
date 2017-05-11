@@ -46,11 +46,11 @@ body
             &:hover
                 background-color: rgba($c,0.7)
 
-            &.O, &.X, &.W
+            &.O, &.X
                 background-size: 80%
-                // background-size: 0%
+
                 &:hover
-                    background-color: $c !important
+                    background-color: $c
 
             &.O
                 background-image: url("../images/O.png")
@@ -60,6 +60,9 @@ body
 
             &.W 
                 background-color: yellow
+
+                &:hover
+                    background-color: yellow
     .stats
         background-color: #f2f2f2
         width: 30%
