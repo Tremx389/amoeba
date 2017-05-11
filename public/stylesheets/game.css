@@ -38,14 +38,16 @@ body {
         background-position: center; }
         body .game-body .board .field:hover {
           background-color: rgba(160, 160, 120, 0.7); }
-        body .game-body .board .field.O, body .game-body .board .field.X {
+        body .game-body .board .field.O, body .game-body .board .field.X, body .game-body .board .field.W {
           background-size: 80%; }
-          body .game-body .board .field.O:hover, body .game-body .board .field.X:hover {
+          body .game-body .board .field.O:hover, body .game-body .board .field.X:hover, body .game-body .board .field.W:hover {
             background-color: #a0a078 !important; }
         body .game-body .board .field.O {
           background-image: url("../images/O.png"); }
         body .game-body .board .field.X {
           background-image: url("../images/X.png"); }
+        body .game-body .board .field.W {
+          background-color: yellow; }
     body .game-body .stats {
       background-color: #f2f2f2;
       width: 30%; }

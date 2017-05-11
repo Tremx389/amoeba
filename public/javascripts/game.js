@@ -1,18 +1,15 @@
-let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+const BOARD_SIZE = 13;
 
-var autoSizer = function() {
+let corMin = (n) => {return n < 0 ? 0 : n;}
+let corMax = (n) => {return n > BOARD_SIZE ? BOARD_SIZE : n;}
+
+let board = [];
+
+
+
+
+
+let autoSizer = function() {
   const r = 0.7;
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -40,21 +37,19 @@ var autoSizer = function() {
   $(".game-body:first-child").css(this.styles);
 }
 
-let corMin = function(n) {
-  return n < 0 ? 0 : n;
-}
-
-let corMax = function(n) {
-  return n > board[0].length ? board[0].length : n;  
-}
-
 let checkWin = function(x, y) {
+  const p2w = 5;      // how many symbols should be in a row
+
   // vertical
   let last;
   let counter = 1;
-  for (let i = corMin(x - 4); i < corMax(x + 5); i++) {
+  for (let i = corMin(x - p2w - 1); i < corMax(x + p2w); i++) {
     if ((last === "X" || last === "O") && last === board[i][y]) {
-      if (counter === 4) {
+      if (counter === p2w - 1) {
+        for (let k = i; k > i - p2w; k--) {
+          board[k][y] = "W";
+        }
+
         return true;
       } else {
         counter++;
@@ -68,9 +63,13 @@ let checkWin = function(x, y) {
   // horizontal
   last = undefined;
   counter = 1;
-  for (let i = corMin(y - 4); i < corMax(y + 5); i++) {
+  for (let i = corMin(y - p2w - 1); i < corMax(y + p2w); i++) {
     if ((last === "X" || last === "O") && last === board[x][i]) {
-      if (counter === 4) {
+      if (counter === p2w - 1) {
+        for (let k = i; k > i - p2w; k--) {
+          board[x][k] = "W";
+        }
+
         return true;
       } else {
         counter++;
@@ -81,13 +80,19 @@ let checkWin = function(x, y) {
     last = board[x][i];
   }
 
-  // left to right diagonal
+  // left-top to right-bottom diagonal
   last = undefined;
   counter = 1;
-  let j = corMin(y - 4);
-  for (let i = corMin(x - 4); i < corMax(x + 5); i++) {
+  let j = corMin(y - p2w + 1);
+  for (let i = corMin(x - p2w + 1); i < corMax(x + p2w); i++) {
     if ((last === "X" || last === "O") && last === board[i][j]) {
-      if (counter === 4) {
+      if (counter === p2w - 1) {
+        let p = j;
+        for (let k = i; k > i - p2w; k--) {
+          board[k][j] = "W";
+          j--;
+        }
+
         return true;
       } else {
         counter++;
@@ -100,15 +105,20 @@ let checkWin = function(x, y) {
     j++;
   }
 
-  return false
-
-// left top to right bottom diagonal
+  // right-top to left-bottom diagonal
   last = undefined;
   counter = 1;
-  j = corMax(y + 4);
-  for (let i = corMin(x - 4); i < corMax(x + 5); i++) {
+  j = corMax(y + p2w - 1);
+  for (let i = corMin(x - p2w + 1); i < corMax(x + p2w); i++) {
+    console.log(i + " - " + j);
     if ((last === "X" || last === "O") && last === board[i][j]) {
-      if (counter === 4) {
+      if (counter === p2w - 1) {
+        let p = j;
+        for (let k = i; k > i - p2w; k--) {
+          board[k][j] = "W";
+          j++;
+        }
+
         return true;
       } else {
         counter++;
@@ -141,7 +151,17 @@ let markField = function() {
     }
 
     if (checkWin(x, y)) {
-      alert("Jatekos nyert!");
+      let c = 1;
+        for (let i = 0; i < BOARD_SIZE; i++) {
+          for (let j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] === "W") {
+              setTimeout(function() {
+                $(".game-body > .board > .field#" + i + "_" + j).addClass("W");
+              }, c * 50);
+              c++;
+            }
+          }
+        }
     }
 
     oNext = !oNext;
@@ -150,14 +170,25 @@ let markField = function() {
   }
 }
 
+//Init
+
+$(document).ready(autoSizer);
+$(window).on("resize", autoSizer);
+
+for (let i = 0; i < BOARD_SIZE; ++i) {
+  board.push([]);
+  for (let j = 0; j < BOARD_SIZE; ++j) {
+    board[i].push(null);
+  }
+}
+
 $(document).ready(function() {
-  const n = board[0].length;
-  const s = 100 / 13 - 0.00;
+  const s = 100 / 13;
   
   let gb = $(".game-body > .board");
 
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let j = 0; j < BOARD_SIZE; j++) {
       let obj = $("<span/>", {id   : i + "_" + j,
                              class: "field",
                              style: "width: " + s + "%;\
@@ -169,7 +200,3 @@ $(document).ready(function() {
   }
 });
 
-
-
-$(document).ready(autoSizer);
-$(window).on("resize", autoSizer);
