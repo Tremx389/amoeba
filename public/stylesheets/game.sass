@@ -7,14 +7,13 @@ body
   padding: 0px
   margin: 0px
   
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  font: 14px Arial, sans-serif
 
   background-color: rgb(4, 90, 100)
   overflow: hidden
 
   .game-body
     position: absolute
-    background-color: blue
     display: block
     // box-shadow: 0 0 50px rgba(0,0,0,1)
 
@@ -23,13 +22,13 @@ body
         height: 100%
         vertical-align: top
 
+    $c: rgb(160,160,120)
     .board
         width: 70%
         background-color: black
         border: 5px solid black
 
         .field
-            $c: rgb(160,160,120)
             background-color: $c
             border: 1px solid black
             display: inline-block
@@ -64,13 +63,66 @@ body
                 &:hover
                     background-color: yellow
     .stats
-        background-color: #f2f2f2
+        background-color: $c * 1.4
         width: 30%
 
-        .playerX
-            .name:after
-                content: " (✖)"
+        .players
+            margin: 10px
+            // background-color: red
+            margin-bottom: 30px
+            // margin-top: 20px
+            // border-radius: 3px
+            border: 5px solid black
 
-        .playerO
-            .name:after
-                content: " (O)"
+            .playerX, .playerO
+                transition: background 0.3s
+            
+                padding: 10px 15px
+                
+                &:first-child
+                    border-bottom: 3px solid black
+
+                &.next
+                    background-color: rgba(4, 90, 100,0.5) * 1.5
+                    color: white
+
+                    .name
+                        font-weight: bold
+
+                & > .name
+                    display: inline-block
+                    width: 80%
+                    font-size: 20px
+                    position: relative
+                    top: -11px
+
+
+
+                    &:before
+                        content: ""
+                        display: inline-block
+                        width: 50px
+                        height: 50px
+                        background-size: 100%
+                        background-repeat: no-repeat
+                        background-position: center
+                        margin-right: 15px
+
+                        position: relative
+                        top: 15px
+
+                & > .points
+                    display: inline-block
+                    font-size: 35px
+                    position: relative
+                    top: -8px
+
+
+
+            .playerX
+                .name:before
+                    background-image: url("../images/X.png")
+
+            .playerO
+                .name:before
+                    background-image: url("../images/O.png")

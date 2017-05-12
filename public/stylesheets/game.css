@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
@@ -10,12 +9,11 @@
 body {
   padding: 0px;
   margin: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px Arial, sans-serif;
   background-color: #045a64;
   overflow: hidden; }
   body .game-body {
     position: absolute;
-    background-color: blue;
     display: block; }
     body .game-body .board, body .game-body .stats {
       display: inline-block;
@@ -52,11 +50,47 @@ body {
           body .game-body .board .field.W:hover {
             background-color: yellow; }
     body .game-body .stats {
-      background-color: #f2f2f2;
+      background-color: #e0e0a8;
       width: 30%; }
-      body .game-body .stats .playerX .name:after {
-        content: " (✖)"; }
-      body .game-body .stats .playerO .name:after {
-        content: " (O)"; }
+      body .game-body .stats .players {
+        margin: 10px;
+        margin-bottom: 30px;
+        border: 5px solid black; }
+        body .game-body .stats .players .playerX, body .game-body .stats .players .playerO {
+          transition: background 0.3s;
+          padding: 10px 15px; }
+          body .game-body .stats .players .playerX:first-child, body .game-body .stats .players .playerO:first-child {
+            border-bottom: 3px solid black; }
+          body .game-body .stats .players .playerX.next, body .game-body .stats .players .playerO.next {
+            background-color: rgba(6, 135, 150, 0.5);
+            color: white; }
+            body .game-body .stats .players .playerX.next .name, body .game-body .stats .players .playerO.next .name {
+              font-weight: bold; }
+          body .game-body .stats .players .playerX > .name, body .game-body .stats .players .playerO > .name {
+            display: inline-block;
+            width: 80%;
+            font-size: 20px;
+            position: relative;
+            top: -11px; }
+            body .game-body .stats .players .playerX > .name:before, body .game-body .stats .players .playerO > .name:before {
+              content: "";
+              display: inline-block;
+              width: 50px;
+              height: 50px;
+              background-size: 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+              margin-right: 15px;
+              position: relative;
+              top: 15px; }
+          body .game-body .stats .players .playerX > .points, body .game-body .stats .players .playerO > .points {
+            display: inline-block;
+            font-size: 35px;
+            position: relative;
+            top: -8px; }
+        body .game-body .stats .players .playerX .name:before {
+          background-image: url("../images/X.png"); }
+        body .game-body .stats .players .playerO .name:before {
+          background-image: url("../images/O.png"); }
 
 /*# sourceMappingURL=game.css.map */

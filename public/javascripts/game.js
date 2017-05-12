@@ -210,9 +210,13 @@ let markField = function() {
       if (oNext) {
         $(this).addClass("O");
         board[x][y] = "O";
+        $(".stats .players .playerO").removeClass("next");
+        $(".stats .players .playerX").addClass("next");
       } else {
         $(this).addClass("X");
         board[x][y] = "X";
+        $(".stats .players .playerO").addClass("next");
+        $(".stats .players .playerX").removeClass("next");
       }
 
       if (checkWin(x, y)) {
@@ -231,6 +235,8 @@ let markField = function() {
 $(document).ready(function() {
   autoSizer();
   clearBoard();
+  
+  $(".stats .players .playerX").addClass("next");
 
   playerO = new Player("John", $(".stats .playerO"));
   playerX = new Player("Bob", $(".stats .playerX"));

@@ -13,11 +13,12 @@ html
     .game-body
         .board
         .stats
-            div.playerX
-                .name= "Anonymous"
-                .points= "0"
-            div.playerO
-                .name= "Anonymous"
-                .points= "0"
-
-            button.restart_btn(onClick="restart()", disabled)="Restart"
+            .players
+                .playerX
+                    .name= "Anonymous"
+                    .points= "0"
+                .playerO
+                    .name= "Anonymous"
+                    .points= "0"
+            center
+                button.restart_btn(onClick="restart()", disabled)="Restart"
