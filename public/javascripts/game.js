@@ -1,5 +1,5 @@
 const BOARD_SIZE = 13;
-const p2w = 5;      // how many symbols should be in a row
+const p2w = 3;      // how many symbols should be in a row
 const r = 0.7;      // game window heigt/width ratio
 
 let corMin = (n) => {return n < 0 ? 0 : n;}
@@ -19,7 +19,6 @@ class Player {
   }
 
   win() {
-    console.log('asdasdasdas')
     this.points++;
 
     $(".points", this.dom_obj).html(this.points);
@@ -99,24 +98,27 @@ let checkWin = function(x, y) {
   // left-top to right-bottom diagonal
   last = undefined;
   counter = 1;
-  let j = corMin(y - p2w + 1);
-  for (let i = corMin(x - p2w + 1); i < corMax(x + p2w); i++) {
-    if ((last === "X" || last === "O") && last === board[i][j]) {
-      if (counter === p2w - 1) {
-        let p = j;
-        for (let k = i; k > i - p2w; k--) {
-          board[k][j] = "W";
-          j--;
-        }
+  j = y - x;
+  for (let i = 0; i < x + (BOARD_SIZE - y); i++) {
+    if (board[i] !== undefined) {
+      if((last === "X" || last === "O") && last === board[i][j]) {
+        if (counter === p2w - 1) {
+          let p = j;
+          for (let k = i; k > i - p2w; k--) {
+            board[k][j] = "W";
+            j--;
+          }
 
-        return true;
+          return true;
+        } else {
+          counter++;
+        }
       } else {
-        counter++;
+        counter = 1;
       }
-    } else {
-      counter = 1;
+
+      last = board[i][j];
     }
-    last = board[i][j];
 
     j++;
   }
@@ -124,24 +126,27 @@ let checkWin = function(x, y) {
   // right-top to left-bottom diagonal
   last = undefined;
   counter = 1;
-  j = corMax(y + p2w - 1);
-  for (let i = corMin(x - p2w + 1); i < corMax(x + p2w); i++) {
-    if ((last === "X" || last === "O") && last === board[i][j]) {
-      if (counter === p2w - 1) {
-        let p = j;
-        for (let k = i; k > i - p2w; k--) {
-          board[k][j] = "W";
-          j++;
-        }
+  j = x + y;
+  for (let i = 0; i < x + y + 1; i++) {
+    if (board[i] !== undefined) {
+      if ((last === "X" || last === "O") && last === board[i][j]) {
+        if (counter === p2w - 1) {
+          let p = j;
+          for (let k = i; k > i - p2w; k--) {
+            board[k][j] = "W";
+            j++;
+          }
 
-        return true;
+          return true;
+        } else {
+          counter++;
+        }
       } else {
-        counter++;
+        counter = 1;
       }
-    } else {
-      counter = 1;
+
+      last = board[i][j];
     }
-    last = board[i][j];
 
     j--;
   }
@@ -179,13 +184,13 @@ let end = function() {
     }
   }
 
-  let winner = (oNext ? playerO : playerX);
-  setTimeout(function() {
-    alert(winner.name + " has won!");
-  }, p2w * 100);
+  (oNext ? playerO : playerX).win();
+  
+  // setTimeout(function() {
+  //   alert(winner.name + " has won!");
+  // }, p2w * 100);
 
-  console.log(winner);
-  winner.win();
+  // winner.win();
 }
 
 let restart = function() {
@@ -195,7 +200,7 @@ let restart = function() {
 }
 
 let markField = function() {
-  if (!ended) {
+  // if (!ended) {
     let rx = /[-]{0,1}[\d.]*[\d]+/g;
     let coords = this.id.match(rx);
     let x = Number(coords[0]);
@@ -218,7 +223,7 @@ let markField = function() {
     } else {
       console.log("Already marked.");
     }
-  }
+  // }
 }
 
 //Init

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
@@ -53,5 +54,9 @@ body {
     body .game-body .stats {
       background-color: #f2f2f2;
       width: 30%; }
+      body .game-body .stats .playerX .name:after {
+        content: " (✖)"; }
+      body .game-body .stats .playerO .name:after {
+        content: " (O)"; }
 
 /*# sourceMappingURL=game.css.map */
