@@ -200,7 +200,7 @@ let restart = function() {
 }
 
 let markField = function() {
-  // if (!ended) {
+  if (!ended) {
     let rx = /[-]{0,1}[\d.]*[\d]+/g;
     let coords = this.id.match(rx);
     let x = Number(coords[0]);
@@ -223,7 +223,7 @@ let markField = function() {
     } else {
       console.log("Already marked.");
     }
-  // }
+  }
 }
 
 //Init
