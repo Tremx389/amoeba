@@ -1,5 +1,5 @@
 const BOARD_SIZE = 13;
-const p2w = 3;      // how many symbols should be in a row
+const p2w = 5;      // how many symbols should be in a row
 const r = 0.7;      // game window heigt/width ratio
 
 let corMin = (n) => {return n < 0 ? 0 : n;}
