@@ -45,9 +45,9 @@ body {
           background-image: url("../images/O.png"); }
         body .game-body .board .field.X {
           background-image: url("../images/X.png"); }
-        body .game-body .board .field.W {
+        body .game-body .board .field.W, body .game-body .board .field.L {
           background-color: yellow; }
-          body .game-body .board .field.W:hover {
+          body .game-body .board .field.W:hover, body .game-body .board .field.L:hover {
             background-color: yellow; }
     body .game-body .stats {
       background-color: #e0e0a8;

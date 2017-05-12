@@ -163,7 +163,7 @@ let clearBoard = function() {
     }
   }
 
-  $(".game-body > .board > .field").removeClass("O X W");
+  $(".game-body > .board > .field").removeClass("O X L W");
 }
 
 let end = function() {
@@ -217,6 +217,9 @@ let markField = function() {
         $(".stats .players .playerO").addClass("next");
         $(".stats .players .playerX").removeClass("next");
       }
+
+      $(".board .field").removeClass("L");
+      $(".board .field#" + x + "_" + y).addClass("L");
 
       if (checkWin(x, y)) {
         end();
