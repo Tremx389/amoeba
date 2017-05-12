@@ -54,7 +54,6 @@ let autoSizer = function() {
 }
 
 let checkWin = function(x, y) {
-
   // vertical
   let last;
   let counter = 1;
@@ -227,6 +226,8 @@ let markField = function() {
     } else {
       console.log("Already marked.");
     }
+  } else {
+    restart();
   }
 }
 
@@ -235,7 +236,7 @@ let markField = function() {
 $(document).ready(function() {
   autoSizer();
   clearBoard();
-  
+
   $(".stats .players .playerX").addClass("next");
 
   playerO = new Player("John", $(".stats .playerO"));
