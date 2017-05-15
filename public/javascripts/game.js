@@ -198,13 +198,16 @@ let restart = function() {
   $("button.restart_btn").prop('disabled', true);
 }
 
-let markField = function() {
+let step = function(x,y){
+	markField.call(document.getElementById(x.toString()+"_"+y.toString()));
+}
+let markField = function(e) {
   if (!ended) {
     let rx = /[-]{0,1}[\d.]*[\d]+/g;
     let coords = this.id.match(rx);
     let x = Number(coords[0]);
     let y = Number(coords[1]);
-
+	if(window.wait && "undefined" !== typeof(e)) return;
     if (!$(this).hasClass("O") && !$(this).hasClass("X")) {
       if (oNext) {
         $(this).addClass("O");
@@ -226,6 +229,15 @@ let markField = function() {
       }
 
       oNext = !oNext;
+	  window.wait=true;
+      $.getJSON("/json").then(function(resp){window.interval = setInterval(function (){
+		  $.getJSON("/json").then(function(resp){ 
+			if(resp.type === "new_step"){
+			clearInterval(window.interval);
+			window.wait = false;
+			step(resp.x,resp.y);
+		  }})
+	  },1000)})
     } else {
       console.log("Already marked.");
     }

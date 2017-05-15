@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var game = require('./routes/game');
+var mjson = require('./routes/mjson');
 
 var app = express();
 // valami222
@@ -33,6 +34,7 @@ app.use('/', index);
 app.use('/users', users);
 
 app.use('/game', game);
+app.use('/json', mjson);
 
 
 
