@@ -229,6 +229,7 @@ let markField = function(e) {
       }
 
       oNext = !oNext;
+	  /*
 	  window.wait=true;
       $.getJSON("/json").then(function(resp){window.interval = setInterval(function (){
 		  $.getJSON("/json").then(function(resp){ 
@@ -238,6 +239,7 @@ let markField = function(e) {
 			step(resp.x,resp.y);
 		  }})
 	  },1000)})
+	  //*/
     } else {
       console.log("Already marked.");
     }
