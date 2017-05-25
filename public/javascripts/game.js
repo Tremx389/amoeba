@@ -9,6 +9,7 @@ let board, playerO, playerX;;
 let oNext = false;
 let ended = false;
 
+/** Class representing a player . */
 class Player {
   constructor(name, dom_obj) {
     this.points = 0;
@@ -25,7 +26,9 @@ class Player {
 
   }
 }
-
+/**
+     * autoSizer set sizes
+*/
 let autoSizer = function() {
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -52,7 +55,12 @@ let autoSizer = function() {
 
   $(".game-body:first-child").css(this.styles);
 }
-
+/**
+	* Check win
+	* @param {number} x - The x position
+	* @param {number} y - The y position
+	* @return {bool} if win the game
+*/
 let checkWin = function(x, y) {
   // vertical
   let last;
